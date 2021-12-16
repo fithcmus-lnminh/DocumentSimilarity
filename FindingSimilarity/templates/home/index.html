@@ -11,32 +11,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="container app">
+        <h2 class="text-center">FINDING SIMILARITY WEB</h2>
         <div class="row g-2 my-4">
             <form action="" method="POST" class="form">
                 {% csrf_token %}
                 <div class="col-md-8 mx-auto">
                     <div class="form-floating">
                         <div class="input-group">
-                            <textarea class="form-control" style="height: 150px" name="query">{% if query %}
-                            {{ query }}{% endif %}</textarea>
-                            <button class="form-submit form-search">
+                            <textarea class="form-control" style="height: 150px" name="query">{% if query %}{{ query }}{% endif %}</textarea>
+                            <button class="form-submit form-search" onclick="showLoading();">
                                 <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png"/>
                                 Search</button>
+                        </div>
+                        <div class="mt-3 text-center" id="loading-spinner" style="display:none">
+                            <h4 style="display:inline">Finding...</h4>
+                            <div class="spinner-border" role="status">
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-
+        
+        <h3>Finding result</h3>
         <div class="result my-4">
         {% for result in plagiat_results %}
             <div class="row py-2">
                 <div class="card border-secondary mb-3 col-md-12 card-item">
-                    <div class="card-header" id="header1" onclick="toggle(this.id)">{{ result.url }} (Similarity: {{ result.data.similarity|floatformat }} %)</div>
+                    <div class="card-header" id="header1" onclick="toggle(this.id)"><span style="font-weight: bold;">{{ result.url }} <span class="text-primary">(Similarity: {{ result.data.similarity|floatformat }} %)</span></span> - Click to see details</div>
                     <div class="card-body text-secondary active">
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>

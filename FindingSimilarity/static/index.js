@@ -8,3 +8,7 @@ function toggle(id) {
 
   cardBody.classList.toggle("active");
 }
+
+function showLoading() {
+  $("#loading-spinner").css("display", "block");
+}

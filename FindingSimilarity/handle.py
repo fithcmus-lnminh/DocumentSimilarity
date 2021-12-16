@@ -7,7 +7,6 @@ import urllib.error
 
 
 class PlagiarismChecker():
-    google_search_max_results = 5
     stopwords = get_stop_words('en')
 
     def __init__(self, query, language):

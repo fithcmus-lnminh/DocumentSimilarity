@@ -20,6 +20,7 @@ $().ready(function () {
 
   $(`.highlighted[data-url="${data_url}"]`).mark(keyword, {
     separateWordSearch: false,
+    className: "highlight",
   });
   // }
 });

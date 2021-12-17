@@ -48,8 +48,8 @@ body {
   cursor: pointer;
 }
 
-mark {
-  background: #fae477;
+.highlight {
+  background-color: #fffd7a;
 }
 
 .card-item {

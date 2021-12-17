@@ -71,12 +71,12 @@ def get_page_data(query, url):
         return
 
     result = filter(visible, html)
-    text = ' '.join(list(result))
+    text = ''.join(list(result))
 
-    text_keywords = get_text_without_stop_words(text).lower()
-    query = get_text_without_stop_words(query).lower()
+    #text_keywords = text.lower()
+    #query = query.lower()
 
-    jaccard_sim = get_jaccard_similarity(query, text_keywords)
+    jaccard_sim = compare(query, text)
 
     similarity = jaccard_sim['similarity']
     intersection_keywords = jaccard_sim['keywords']
@@ -84,20 +84,40 @@ def get_page_data(query, url):
     return {'html': html, 'html_page': html_page, 'text': text, 'keywords': intersection_keywords, 'similarity': similarity}
 
 
-def get_jaccard_similarity(query, document):
+def get_jaccard_similarity(sentence1, sentence2):
     # You have to do this before calling this method :
     # query = get_text_without_stop_words(query).lower()
     # document = get_text_without_stop_words(document).lower()
-
-    a = set(query.split())
-    b = set(document.split())
-    c = a.intersection(b)
-
+    sentence1 = get_text_without_stop_words(sentence1).lower()
+    sentence2 = get_text_without_stop_words(sentence2).lower()
+    a = sentence1.split()
+    b = sentence2.split()
+    c = []
+    for i in range(len(a)):
+        for j in range(len(b)):
+            if (a[i] == b[j]):
+                c.append(a[i])
     # Document similarity to Query
     #similarity = round((float(len(c)) / (len(a) + len(b) - len(c))), 2)
     #sim2 = round((1 - similarity), 2) * 100
 
-    similarity = (len(c) * 100) / len(a)
+    # jaccard distance ~ similarity
+    similarity = (len(c) / (len(a) + len(b) - len(c)))
+
+    return similarity
+
+
+def compare(query, document):
+    a = query.split(". ")
+    b = document.split(". ")
+    c = []
+    for i in range(len(a)):
+        for j in range(len(b)):
+            if (get_jaccard_similarity(a[i], b[j]) > 0.8):
+                c.append(a[i])
+
+    print(c)
+    similarity = (1 - (len(c) / (len(a) + len(b) - len(c))))*100
 
     return {'similarity': similarity, 'keywords': c}
 

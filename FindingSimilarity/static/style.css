@@ -48,6 +48,10 @@ body {
   cursor: pointer;
 }
 
+mark {
+  background: #fae477;
+}
+
 .card-item {
   padding-left: 0 !important;
   padding-right: 0 !important;

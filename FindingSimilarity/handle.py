@@ -80,6 +80,7 @@ def get_page_data(query, url):
 
     similarity = jaccard_sim['similarity']
     intersection_keywords = jaccard_sim['keywords']
+    print(intersection_keywords)
 
     return {'html': html, 'html_page': html_page, 'text': text, 'keywords': intersection_keywords, 'similarity': similarity}
 
@@ -102,21 +103,21 @@ def get_jaccard_similarity(sentence1, sentence2):
     #sim2 = round((1 - similarity), 2) * 100
 
     # jaccard distance ~ similarity
-    similarity = (len(c) / (len(a) + len(b) - len(c)))
+    # prevent divide by zero
+    similarity = (len(c) / (len(a) + len(b) - len(c) + 0.0000000001))
 
     return similarity
 
 
 def compare(query, document):
-    a = query.split(". ")
-    b = document.split(". ")
+    a = query.split(".")
+    b = document.split(".")
     c = []
     for i in range(len(a)):
         for j in range(len(b)):
             if (get_jaccard_similarity(a[i], b[j]) > 0.8):
                 c.append(a[i])
 
-    print(c)
     similarity = (1 - (len(c) / (len(a) + len(b) - len(c))))*100
 
     return {'similarity': similarity, 'keywords': c}

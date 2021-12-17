@@ -14,10 +14,10 @@ $().ready(function () {
   const result = document.getElementsByClassName("result-card");
 
   //for (let i = 0; i < result.length; i++) {
-  const keyword = $(".get-data").attr("data-keywords");
+  let keyword = $(".get-data").attr("data-keywords");
   const data_url = $(".highlighted").attr("data-url");
+  keyword = keyword.split(".");
   console.log(keyword);
-
   $(`.highlighted[data-url="${data_url}"]`).mark(keyword, {
     separateWordSearch: false,
     className: "highlight",

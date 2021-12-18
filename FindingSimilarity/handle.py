@@ -91,20 +91,21 @@ def get_jaccard_similarity(sentence1, sentence2):
     # document = get_text_without_stop_words(document).lower()
     sentence1 = get_text_without_stop_words(sentence1).lower()
     sentence2 = get_text_without_stop_words(sentence2).lower()
-    a = sentence1.split()
-    b = sentence2.split()
-    c = []
-    for i in range(len(a)):
-        for j in range(len(b)):
-            if (a[i] == b[j]):
-                c.append(a[i])
+    a = set(sentence1.split())
+    b = set(sentence2.split())
+    c = a.intersection(b)
+    # for i in range(len(a)):
+    #     for j in range(len(b)):
+    #         if (a[i] == b[j]):
+    #             c.append(a[i])
     # Document similarity to Query
     #similarity = round((float(len(c)) / (len(a) + len(b) - len(c))), 2)
     #sim2 = round((1 - similarity), 2) * 100
 
     # jaccard distance ~ similarity
     # prevent divide by zero
-    similarity = (len(c) / (len(a) + len(b) - len(c) + 0.0000000001))
+    deno = len(a) + len(b) - len(c)
+    similarity = deno and (len(c) / (len(a) + len(b) - len(c))) or 0
 
     return similarity
 
@@ -113,12 +114,14 @@ def compare(query, document):
     a = query.split(".")
     b = document.split(".")
     c = []
+    similarity = 0
     for i in range(len(a)):
         for j in range(len(b)):
-            if (get_jaccard_similarity(a[i], b[j]) > 0.8):
-                c.append(a[i])
+            if (get_jaccard_similarity(a[i], b[j]) > 0.5):
+                similarity += get_jaccard_similarity(a[i], b[j])
+                c.append(b[j])
 
-    similarity = (1 - (len(c) / (len(a) + len(b) - len(c))))*100
+    similarity = len(c) and similarity * 100 / len(c) or 0
 
     return {'similarity': similarity, 'keywords': c}
 

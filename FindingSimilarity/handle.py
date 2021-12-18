@@ -81,7 +81,6 @@ def get_page_data(query, url):
     similarity = jaccard_sim['similarity']
     intersection_keywords = jaccard_sim['keywords']
     print(intersection_keywords)
-
     return {'html': html, 'html_page': html_page, 'text': text, 'keywords': intersection_keywords, 'similarity': similarity}
 
 

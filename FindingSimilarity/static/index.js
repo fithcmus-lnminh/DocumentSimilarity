@@ -11,16 +11,16 @@ function showLoading() {
 }
 
 $().ready(function () {
-  const result = document.getElementsByClassName("result-card");
-
-  for (let i = 0; i < result.length; i++) {
-    let keyword = $(".get-data").attr("data-keywords");
-    const data_url = $(".highlighted").attr("data-url");
+  const result = document.querySelectorAll(".result-card");
+  Array.from(result).forEach((obj) => {
+    let keyword = obj.querySelector(".get-data").getAttribute("data-keywords");
+    const data_url = obj.querySelector(".highlighted").getAttribute("data-url");
     keyword = keyword.split(".");
+    console.log(keyword);
     console.log(data_url);
     $(`.highlighted[data-url="${data_url}"]`).mark(keyword, {
       separateWordSearch: false,
       className: "highlight",
     });
-  }
+  });
 });

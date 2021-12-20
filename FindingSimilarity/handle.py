@@ -23,7 +23,7 @@ class FindingSimilarity():
         self.urls_details = []
 
     def get_urls_text(self):
-        for url in search(get_text_without_stop_words(self.query), stop=5):
+        for url in search(self.query, stop=5):
             url_details = {
                 'url': url,
                 'data': get_page_data(self.query, url),

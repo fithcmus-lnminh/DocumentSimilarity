@@ -42,13 +42,13 @@
             </form>
         </div>
         
-        {% if plagiat_results %}
+        {% if results %}
             <h3>Finding result</h3>
         <div class="result my-4">
-        {% for result in plagiat_results %}
+        {% for result in results %}
             <div class="row py-2 result-card">
                 <div class="card border-secondary mb-3 col-md-12 card-item">
-                    <div class="get-data" data-keywords="{% for keyword in  result.data.keywords %}{{ keyword }}{% if not forloop.last %}.{% endif %}{% endfor %}"></div>
+                    <div class="get-data" data-keywords="{% for sentence in result.data.sentences %}{{ sentence }}{% if not forloop.last %}.{% endif %}{% endfor %}"></div>
                     <div class="card-header" id="{{ result.url }}" onclick="toggle(this.id)"><span style="font-weight: bold;">{{ result.url }} <span class="text-primary">(Similarity: {{ result.data.similarity|floatformat }} %)</span></span> - Click to see details</div>
                     <div class="card-body text-secondary active">
                         <h5 class="card-title">Access to website: <a href="{{ result.url }}" target="_blank">{{ result.url }}</a></h5>

@@ -13,12 +13,11 @@ function showLoading() {
 $().ready(function () {
   const result = document.querySelectorAll(".result-card");
   Array.from(result).forEach((obj) => {
-    let keyword = obj.querySelector(".get-data").getAttribute("data-keywords");
+    let sentence = obj.querySelector(".get-data").getAttribute("data-keywords");
     const data_url = obj.querySelector(".highlighted").getAttribute("data-url");
-    keyword = keyword.split(".");
-    console.log(keyword);
-    console.log(data_url);
-    $(`.highlighted[data-url="${data_url}"]`).mark(keyword, {
+    sentence = sentence.split(".");
+
+    $(`.highlighted[data-url="${data_url}"]`).mark(sentence, {
       separateWordSearch: false,
       className: "highlight",
     });
